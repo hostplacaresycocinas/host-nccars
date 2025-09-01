@@ -61,7 +61,7 @@ export const sedes = [
     tel: null,
     whatsapp: '1122334455',
     schedule: ['Lunes a Sábados 09:00 a 19:00hs'],
-    appointment: 'https://maps.app.goo.gl/Lk9ZXWaEhsKcxhcX8',
+    appointment: 'https://maps.app.goo.gl/qVkmMqiJmqLHrSrt7',
     image: 'sede-3.webp',
   },
 ];
