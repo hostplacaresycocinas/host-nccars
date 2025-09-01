@@ -1,6 +1,5 @@
 'use client';
 
-import { company } from '@/app/constants/constants';
 import Link from 'next/link';
 import HeroCarousel from './HeroCarousel';
 import { motion } from 'framer-motion';
