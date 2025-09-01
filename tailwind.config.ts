@@ -10,12 +10,13 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        manrope: ['var(--font-manrope)', 'sans-serif'],
+        oswald: ['var(--font-oswald)', 'sans-serif'],
+        sourceSans3: ['var(--font-source-sans-3)', 'sans-serif'],
       },
       colors: {
-        'color-primary': '#1265A8',
-        'color-primary-dark': '#0271CA',
-        'color-primary-light': '#2E89D2',
+        'color-primary': '#E21011',
+        'color-primary-dark': '#FE0001',
+        'color-primary-light': '#FE0001',
         'color-primary-admin': '#E9262C',
         'color-primary-dark-admin': '#F0161C',
         'color-secondary': '#1E1E1E',

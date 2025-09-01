@@ -685,7 +685,7 @@ const CatalogoPage = () => {
                                 company.dark
                                   ? 'group-hover:text-color-primary'
                                   : 'group-hover:text-color-primary-dark'
-                              } text-color-title text-lg md:text-xl font-bold tracking-tight truncate md:mb-1 transition-colors duration-300`}
+                              } text-color-title text-xl md:text-[22px] font-bold tracking-tight truncate md:mb-1 transition-colors duration-300`}
                             >
                               {car.model}
                             </h3>
@@ -693,7 +693,7 @@ const CatalogoPage = () => {
                             <div
                               className={`${
                                 company.price ? '' : 'hidden'
-                              } text-color-primary text-lg md:text-xl font-bold tracking-tight truncate md:mb-1 transition-colors duration-300`}
+                              } text-color-primary text-xl md:text-[22px] font-bold tracking-tight truncate md:mb-1 transition-colors duration-300`}
                             >
                               {car.price.moneda === 'ARS' ? '$' : 'US$'}
                               {car.price.valor.toLocaleString('es-ES')}
@@ -717,13 +717,13 @@ const CatalogoPage = () => {
                             {/* Precio o etiqueta destacada */}
                             <div className='flex justify-between items-center text-color-text mt-0.5'>
                               {car.mileage === 0 ? (
-                                <span className='text-sm font-semibold uppercase tracking-wider text-color-primary'>
+                                <span className='text-base font-semibold uppercase tracking-wider text-color-primary'>
                                   Nuevo{' '}
                                   <span className='text-color-primary'>•</span>{' '}
                                   {car.mileage.toLocaleString('es-ES')} km
                                 </span>
                               ) : (
-                                <span className='text-sm text-color-text font-medium uppercase tracking-wider'>
+                                <span className='text-base text-color-text font-medium uppercase tracking-wider'>
                                   Usado{' '}
                                   <span className='text-color-primary'>•</span>{' '}
                                   {car.mileage.toLocaleString('es-ES')} km

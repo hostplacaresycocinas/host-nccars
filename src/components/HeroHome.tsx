@@ -19,15 +19,15 @@ const HeroHome = () => {
               className={`absolute w-full h-full top-0 -right-0 bg-black/65 md:bg-black/75 -z-20`}
             ></div>
 
-            <div className='flex flex-col items-center'>
+            <div className='flex flex-col gap-2 md:gap-3 items-center font-oswald'>
               <div className='md:gap-3 text-nowrap'>
                 <motion.h2
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
-                  className='text-[28px] sm:text-4xl md:text-4xl lg:text-5xl xl:text-7xl font-bold text-color-primary-light'
+                  className='uppercase text-[28px] sm:text-4xl md:text-4xl lg:text-5xl xl:text-7xl font-bold text-color-primary-light'
                 >
-                  Tu auto ideal está
+                  Tu próximo vehículo
                 </motion.h2>
               </div>
               <div className='md:gap-3 text-nowrap lg:mb-2'>
@@ -35,9 +35,9 @@ const HeroHome = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.1 }}
-                  className='text-[28px] sm:text-4xl md:text-4xl lg:text-5xl xl:text-7xl font-bold text-color-title-light'
+                  className='uppercase text-[28px] sm:text-4xl md:text-4xl lg:text-5xl xl:text-7xl font-bold text-color-title-light'
                 >
-                  en {company.name}
+                  te está esperando
                 </motion.h2>
               </div>
             </div>
@@ -45,30 +45,11 @@ const HeroHome = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className='text-lg lg:text-xl xl:text-2xl text-center text-color-text-light mx-4 max-w-md sm:max-w-md lg:max-w-lg xl:max-w-2xl mb-1 sm:mb-2 md:mb-4'
+              className='text-lg lg:text-xl xl:text-2xl text-center text-color-text-light mx-4 max-w-md sm:max-w-md lg:max-w-lg xl:max-w-xl mb-1 sm:mb-2 md:mb-4 mt-1'
             >
-              Vehículos seleccionados con la mejor relación calidad-precio del
-              mercado. Esperamos tu consulta!
+              Tenemos el auto que buscas: Vehículos seleccionados, usados y 0km.
+              ¡Consultanos!
             </motion.p>
-
-            {/* Features destacados */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.25 }}
-              className='flex justify-center gap-3 sm:gap-4 lg:gap-6 mb-3 sm:mb-4 lg:mb-6 text-color-text-light'
-            >
-              <div className='flex items-center gap-2'>
-                <div className='w-2 h-2 bg-color-primary-light rounded-full'></div>
-                <span className='lg:text-lg font-medium'>Compra/Venta</span>
-              </div>
-              <div className='flex items-center gap-2'>
-                <div className='w-2 h-2 bg-color-primary-light rounded-full'></div>
-                <span className='lg:text-lg font-medium'>
-                  Consignación/Permuta
-                </span>
-              </div>
-            </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -82,40 +63,6 @@ const HeroHome = () => {
               >
                 <span className='relative z-10 flex items-center justify-center gap-2'>
                   <span>Explorar Catálogo</span>
-                  <svg
-                    className='w-5 h-5 group-hover:translate-x-1 transition-transform duration-300'
-                    fill='none'
-                    stroke='currentColor'
-                    viewBox='0 0 24 24'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M17 8l4 4m0 0l-4 4m4-4H3'
-                    />
-                  </svg>
-                </span>
-              </Link>
-              <Link
-                href='/contacto'
-                className='group px-8 py-4 border-2 border-white/30 text-white font-semibold rounded-xl hover:border-color-primary hover:bg-white/10  transition-all duration-300 transform  backdrop-blur-sm'
-              >
-                <span className='flex items-center justify-center gap-2'>
-                  <span>Contactar</span>
-                  <svg
-                    className='w-[18px] h-[18px] group-hover:scale-110 transition-transform duration-300'
-                    fill='none'
-                    stroke='currentColor'
-                    viewBox='0 0 24 24'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
-                    />
-                  </svg>
                 </span>
               </Link>
             </motion.div>

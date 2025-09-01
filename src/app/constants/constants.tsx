@@ -2,29 +2,20 @@ export const company = {
   dark: false,
   darkmode: true,
   shortAdress: true,
-  favicon: true,
+  favicon: false,
   price: true,
   objectCover: '50%',
-  id: 'peunord',
-  name: 'Peunord',
-  adress: 'Av. Maipú 3700',
-  city: 'Olivos',
-  email: 'contacto@peunord.com.ar',
-  instagram: 'peunord',
-  facebook: 'https://www.facebook.com/profile.php?id=100090242462161',
-  whatsapp: ['1172080007', '1143115786'],
-  googlemapsLink: 'https://maps.app.goo.gl/r5XX96KadRZd2dxr7',
-  googlemaps:
-    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3288.034940277005!2d-58.495712893125294!3d-34.50199846449724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb16e398fad59%3A0x596cd87eaabd33f6!2sPeunord!5e0!3m2!1sen!2sar!4v1756166234239!5m2!1sen!2sar',
-  openDays: [
-    { day: 'Lunes', hours: ['09:00 a 19:00hs'] },
-    { day: 'Martes', hours: ['09:00 a 19:00hs'] },
-    { day: 'Miércoles', hours: ['09:00 a 19:00hs'] },
-    { day: 'Jueves', hours: ['09:00 a 19:00hs'] },
-    { day: 'Viernes', hours: ['09:00 a 19:00hs'] },
-    { day: 'Sábado', hours: ['10:00 a 15:00hs'] },
-    // { day: 'Domingo', hours: ['09:00 a 13:00hs'] },
-  ],
+  id: 'jcaautos',
+  name: 'JCA AUTOS',
+  adress: null,
+  city: null,
+  email: 'jcaautosseleccionados@gmail.com',
+  instagram: 'jcaautosseleccionados',
+  facebook: 'https://www.facebook.com/JCA.Autos.Seleccionados/',
+  whatsapp: ['3484540518'],
+  googlemapsLink: null,
+  googlemaps: null,
+  openDays: null,
   footer:
     'Compra y Venta de Autos: Vehículos seleccionados, atención personalizada.',
 };
@@ -33,11 +24,47 @@ export const API_BASE_URL = 'https://dealership.agenciagrvity.com';
 export const TENANT = 'accotto-automotores';
 
 export const metadataCompany = {
-  metadataBase: 'https://peunord.vercel.app/',
-  title: 'Peunord - Compra y Venta de Autos',
+  metadataBase: 'https://jcaautos.vercel.app/',
+  title: 'JCA AUTOS - Compra y Venta de Autos',
   description:
     'Compra y Venta de Autos: Vehículos seleccionados, atención personalizada.',
 };
+
+export const sedes = [
+  {
+    id: 1,
+    title: 'JCA 25 de Mayo',
+    adress: 'Av. 25 de Mayo 841',
+    city: 'Escobar',
+    tel: null,
+    whatsapp: '1122334455',
+    schedule: ['Lunes a Sábados 09:00 a 19:00hs'],
+    appointment: 'https://maps.app.goo.gl/bg1XMiuiKhBx7x3T6',
+    image: 'sede-1.webp',
+  },
+  {
+    id: 2,
+    title: 'JCA Tapia de cruz',
+    adress: 'Av. Tapia de cruz 1363',
+    city: 'Escobar',
+    tel: null,
+    whatsapp: '1122334455',
+    schedule: ['Lunes a Sábados 09:00 a 19:00hs'],
+    appointment: 'https://maps.app.goo.gl/4ktuiDMRxc1LCCcE8',
+    image: 'sede-2.webp',
+  },
+  {
+    id: 3,
+    title: 'JCA Sarmiento',
+    adress: 'Av. Sarmiento 3025',
+    city: 'Matheu',
+    tel: null,
+    whatsapp: '1122334455',
+    schedule: ['Lunes a Sábados 09:00 a 19:00hs'],
+    appointment: 'https://maps.app.goo.gl/Lk9ZXWaEhsKcxhcX8',
+    image: 'sede-3.webp',
+  },
+];
 
 // Cambie el archivo data.json, necesito que actualices la informacion de catalogo.json. Las images tomalas de images de data.json, la descripcion tomala de caption de data.json, pero necesito que el texto este parseado, que no este todo junto sin espacios y saltos de linea. En name pone la marca y el modelo del vehiculo en title case, marca, marcaId todo esto acorde a la informacion de caption. Si en caption no se dice kilometraje o precio pone 999999, categoria estimala para el vehiculo (categorias tipicas de vehiculos en argentina. como utilitario, deportivo, suv, hatchback, etc). Transmision, motor, combustible y puertas estimalas acorde al vehiculo. La cantidad de vehiculos tiene que ser la de data.json, si en catalogo.json hay otros vehiculos removelos, los vehiclos de catalogo json tienen que ser los mismos que en data.json. No hagas un script, simplemente actualizalo con ia.
 
