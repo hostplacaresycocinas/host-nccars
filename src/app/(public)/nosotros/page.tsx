@@ -22,7 +22,7 @@ const NosotrosPage = () => {
             className='object-cover'
             priority
           />
-          <div className='absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/80'></div>
+          <div className='absolute inset-0 bg-black/80 md:bg-black/70'></div>
         </div>
 
         {/* Contenido centrado */}
@@ -47,7 +47,7 @@ const NosotrosPage = () => {
       </section>
 
       {/* Sección de historia moderna */}
-      <section className='py-16 md:py-20'>
+      <section className='pt-8 md:pt-12 pb-8 md:pb-12'>
         <div className='max-w-7xl mx-auto px-4'>
           <div className='grid lg:grid-cols-2 gap-12 lg:gap-16 items-center'>
             {/* Imagen con diseño moderno */}
@@ -79,9 +79,8 @@ const NosotrosPage = () => {
               viewport={{ once: true }}
               className='space-y-6'
             >
-              <h2 className='text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight'>
-                Más de una década{' '}
-                <span className='text-color-primary'>transformando</span> sueños
+              <h2 className='text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight max-w-lg'>
+                <span className='text-color-primary'>Transformando</span> sueños
                 en realidad
               </h2>
               <p className='text-lg md:text-xl text-gray-600 leading-relaxed'>

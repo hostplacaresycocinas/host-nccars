@@ -5,14 +5,15 @@ export const company = {
   favicon: false,
   price: false,
   objectCover: '50%',
-  id: 'jcaautos',
-  name: 'JCA AUTOS',
+  id: 'biucarmultimarcas',
+  name: 'Biucar Multimarcas',
   adress: null,
   city: null,
-  email: 'jcaautosseleccionados@gmail.com',
-  instagram: 'jcaautosseleccionados',
-  facebook: 'https://www.facebook.com/JCA.Autos.Seleccionados/',
-  whatsapp: ['3484540518'],
+  email: null,
+  instagram: 'biucar_multimarcas',
+  facebook:
+    'https://www.facebook.com/people/Biucar-Multimarcas/100070322340772/',
+  whatsapp: ['3463402647', '3463453956', '3463451561', '3547625493'],
   googlemapsLink: null,
   googlemaps: null,
   openDays: null,
@@ -24,8 +25,8 @@ export const API_BASE_URL = 'https://dealership.agenciagrvity.com';
 export const TENANT = 'accotto-automotores';
 
 export const metadataCompany = {
-  metadataBase: 'https://jcaautos.vercel.app/',
-  title: 'JCA AUTOS - Compra y Venta de Autos',
+  metadataBase: 'https://biucarmultimarcas.vercel.app/',
+  title: 'Biucar Multimarcas - Compra y Venta de Autos',
   description:
     'Compra y Venta de Autos: Vehículos seleccionados, atención personalizada.',
 };
@@ -33,36 +34,31 @@ export const metadataCompany = {
 export const sedes = [
   {
     id: 1,
-    title: 'JCA 25 de Mayo',
-    adress: 'Av. 25 de Mayo 841',
-    city: 'Escobar',
+    title: 'Biucar Canals',
+    adress: 'Maipú 290',
+    city: 'Canals.Cba',
     tel: null,
     whatsapp: '1122334455',
-    schedule: ['Lunes a Sábados 09:00 a 19:00hs'],
-    appointment: 'https://maps.app.goo.gl/bg1XMiuiKhBx7x3T6',
+    schedule: [
+      'Lunes a Viernes 8:30 a 12:30 y 15:30 a 19:30hs',
+      'Sábados 8:30 a 12:30hs',
+    ],
+    appointment: 'https://maps.app.goo.gl/QkmHzH1idZwELN5P9',
     image: 'sede-1.webp',
   },
   {
     id: 2,
-    title: 'JCA Tapia de cruz',
-    adress: 'Av. Tapia de cruz 1363',
-    city: 'Escobar',
+    title: 'Biucar Alta Gracia',
+    adress: 'Yrigoyen 1300',
+    city: 'Alta Gracia.Cba',
     tel: null,
     whatsapp: '1122334455',
-    schedule: ['Lunes a Sábados 09:00 a 19:00hs'],
-    appointment: 'https://maps.app.goo.gl/4ktuiDMRxc1LCCcE8',
+    schedule: [
+      'Lunes a Viernes 8:30 a 12:30 y 15:30 a 19:30hs',
+      'Sábados 8:30 a 12:30hs',
+    ],
+    appointment: 'https://maps.app.goo.gl/qSSxoYpmEJepnF1E9',
     image: 'sede-2.webp',
-  },
-  {
-    id: 3,
-    title: 'JCA Sarmiento',
-    adress: 'Av. Sarmiento 3025',
-    city: 'Matheu',
-    tel: null,
-    whatsapp: '1122334455',
-    schedule: ['Lunes a Sábados 09:00 a 19:00hs'],
-    appointment: 'https://maps.app.goo.gl/qVkmMqiJmqLHrSrt7',
-    image: 'sede-3.webp',
   },
 ];
 

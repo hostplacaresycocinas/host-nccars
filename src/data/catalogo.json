@@ -1,20 +1,20 @@
 [
   {
-    "id": "ford-focus-2015",
-    "name": "Ford Focus 1.6 S MT",
+    "id": "ford-ranger-2015",
+    "name": "Ford Ranger 2.2 XL Safety 4x4",
     "marca": "Ford",
     "marcaId": "ford",
     "ano": 2015,
-    "kilometraje": 999999,
+    "kilometraje": 202000,
     "precio": {
-      "valor": 3500000,
+      "valor": 999999,
       "moneda": "ARS"
     },
-    "categoria": "Hatchback",
+    "categoria": "Pickup",
     "transmision": "Manual",
-    "motor": "1.6",
-    "combustible": "Nafta",
-    "puertas": 5,
+    "motor": "2.2",
+    "combustible": "Diesel",
+    "puertas": 4,
     "images": [
       "1-1.webp",
       "1-2.webp",
@@ -24,25 +24,26 @@
       "1-6.webp",
       "1-7.webp",
       "1-8.webp",
-      "1-9.webp"
+      "1-9.webp",
+      "1-10.webp"
     ],
-    "descripcion": "Ford Focus 1.6 S MT\n\nModelo 2015\n\nAnticipo de $3.500.000 y cuotas\n\nNos encontramos en Escobar, zona norte."
+    "descripcion": "RANGER\n\nAño: 2015\n\nVersión: 2.2 XL SAFETY 4x4\n\nKms: 202.000\n\nEn excelente estado!!\n\nPara más información no dudes en llamar o WhatsApp\n\n📲3463402647 Lionel\n📲3463453956 Alejandro\n📲3463451561 Juan Manuel (Viamonte)\n📲3547-625493 Matías (Alta Gracia)\n\n📍Canals - Cba\n\n#Biucar Multimarcas #biucar #usadosseleccionados!"
   },
   {
-    "id": "volkswagen-amarok-2024",
-    "name": "Volkswagen Amarok 2.0 Trendline 4x2 MT",
-    "marca": "Volkswagen",
-    "marcaId": "volkswagen",
-    "ano": 2024,
-    "kilometraje": 0,
+    "id": "toyota-hilux-2014",
+    "name": "Toyota Hilux 3.0 SRV 4x4 MT",
+    "marca": "Toyota",
+    "marcaId": "toyota",
+    "ano": 2014,
+    "kilometraje": 137000,
     "precio": {
-      "valor": 3500000,
+      "valor": 999999,
       "moneda": "ARS"
     },
     "categoria": "Pickup",
     "transmision": "Manual",
-    "motor": "2.0",
-    "combustible": "Nafta",
+    "motor": "3.0",
+    "combustible": "Diesel",
     "puertas": 4,
     "images": [
       "2-1.webp",
@@ -53,26 +54,27 @@
       "2-6.webp",
       "2-7.webp",
       "2-8.webp",
-      "2-9.webp"
+      "2-9.webp",
+      "2-10.webp"
     ],
-    "descripcion": "Volkswagen Amarok 2.0 Trendline 4x2 MT\n\nModelo 0 KM\n\nAnticipo de $3.500.000 y cuotas\n\nNos encontramos en Escobar, zona norte."
+    "descripcion": "VENDIDA - Hilux\n\nAño: 2014\n\nVersión: 3.0 SRV 4x4 MT\n\nKms: 137.000\n\nÚnica en su estado, la más noble de las Hilux 🇯🇵\n\nPara más información no dudes en llamar o WhatsApp\n\n📲3463402647 Lionel\n📲3463453956 Alejandro\n📲3463451561 Juan Manuel (Viamonte)\n📲3547-625493 Matías (Alta Gracia)\n\n📍Canals - Cba\n\n#Biucar Multimarcas #biucar #usadosseleccionados!"
   },
   {
-    "id": "volkswagen-polo-2018",
-    "name": "Volkswagen Polo 1.6 Comfortline",
-    "marca": "Volkswagen",
-    "marcaId": "volkswagen",
-    "ano": 2018,
-    "kilometraje": 999999,
+    "id": "fiat-cronos-2021",
+    "name": "Fiat Cronos Precisión 1.8 MT",
+    "marca": "Fiat",
+    "marcaId": "fiat",
+    "ano": 2021,
+    "kilometraje": 49300,
     "precio": {
-      "valor": 3500000,
+      "valor": 999999,
       "moneda": "ARS"
     },
-    "categoria": "Hatchback",
+    "categoria": "Sedán",
     "transmision": "Manual",
-    "motor": "1.6",
+    "motor": "1.8",
     "combustible": "Nafta",
-    "puertas": 5,
+    "puertas": 4,
     "images": [
       "3-1.webp",
       "3-2.webp",
@@ -81,24 +83,25 @@
       "3-5.webp",
       "3-6.webp",
       "3-7.webp",
-      "3-8.webp"
+      "3-8.webp",
+      "3-9.webp"
     ],
-    "descripcion": "Volkswagen Polo 1.6 Comfortline\n\nModelo 2018\n\nAnticipo de $3.500.000 y cuotas\n\nNos encontramos en Escobar, zona norte."
+    "descripcion": "VENDIDO - Cronos\n\nAño: 2021\n\nMarca: Fiat\n\nKm: 49.300\n\nVersión: Precisión 1.8 MT\n\nÚnico dueño 💯\n\nRecomendable\n\nVení a probarlo\n\nPara más información no dudes en llamar o WhatsApp\n\n📲3463-402647 Lionel\n📲3463-453956 Alejandro\n📲3547-625493 Matías (Alta Gracia)\n📲3463-451561 Juan Manuel\n\n📍Canals\n\n#Biucar Multimarcas #biucar #usadosseleccionados!"
   },
   {
-    "id": "peugeot-308-2015",
-    "name": "Peugeot 308 1.6 Feline Tiptronic",
-    "marca": "Peugeot",
-    "marcaId": "peugeot",
-    "ano": 2015,
-    "kilometraje": 999999,
+    "id": "volkswagen-tcross-2025",
+    "name": "Volkswagen T-Cross Trendline AT 200 TSI",
+    "marca": "Volkswagen",
+    "marcaId": "volkswagen",
+    "ano": 2025,
+    "kilometraje": 13800,
     "precio": {
-      "valor": 3500000,
+      "valor": 999999,
       "moneda": "ARS"
     },
-    "categoria": "Hatchback",
-    "transmision": "Manual",
-    "motor": "1.6",
+    "categoria": "SUV",
+    "transmision": "Automática",
+    "motor": "2.0",
     "combustible": "Nafta",
     "puertas": 5,
     "images": [
@@ -108,28 +111,26 @@
       "4-4.webp",
       "4-5.webp",
       "4-6.webp",
-      "4-7.webp",
-      "4-8.webp",
-      "4-9.webp"
+      "4-7.webp"
     ],
-    "descripcion": "Peugeot 308 1.6 Feline Tiptronic\n\nModelo 2015\n\nAnticipo de $3.500.000 y cuotas\n\nNos encontramos en Escobar, zona norte."
+    "descripcion": "T-CROSS\n\nMarca: Volkswagen\n\nVersión: TRENDLINE AT 200 TSI\n\nAño: 2025\n\nAutomático / Línea nueva\n\nKms: 13.800\n\nExcelente oportunidad !!\n\nA penas rodada !\n\nPara más información no dudes en llamar o WhatsApp\n\n📲3463402647 Lionel\n📲3463453956 Alejandro\n📲3463451561 Juan Manuel (Viamonte)\n📲3547-625493 Matías (Alta Gracia)\n\n📍Alta Gracia - Cba\n\n#Biucar Multimarcas #biucar #usadosseleccionados"
   },
   {
-    "id": "volkswagen-vento-2017",
-    "name": "Volkswagen Vento 1.4 TSI",
-    "marca": "Volkswagen",
-    "marcaId": "volkswagen",
-    "ano": 2017,
-    "kilometraje": 999999,
+    "id": "honda-crv-2016",
+    "name": "Honda CRV 2.4 4x2 LX CVT L/17",
+    "marca": "Honda",
+    "marcaId": "honda",
+    "ano": 2016,
+    "kilometraje": 108000,
     "precio": {
-      "valor": 3500000,
+      "valor": 999999,
       "moneda": "ARS"
     },
-    "categoria": "Sedán",
-    "transmision": "Manual",
-    "motor": "1.4",
+    "categoria": "SUV",
+    "transmision": "Automática",
+    "motor": "2.4",
     "combustible": "Nafta",
-    "puertas": 4,
+    "puertas": 5,
     "images": [
       "5-1.webp",
       "5-2.webp",
@@ -138,25 +139,24 @@
       "5-5.webp",
       "5-6.webp",
       "5-7.webp",
-      "5-8.webp",
-      "5-9.webp"
+      "5-8.webp"
     ],
-    "descripcion": "Volkswagen Vento 1.4 TSI\n\nModelo 2017\n\nAnticipo de $3.500.000 y cuotas\n\nNos encontramos en Escobar, zona norte."
+    "descripcion": "VENDIDA - CRV\n\nMarca: Honda\n\nVersión: CRV 2.4 4x2 LX CVT L/17\n\nAño: 2016\n\nAutomático\n\nKms: 108.000\n\nDe único dueño!\n\nEn excelente estado!\n\nClásico de la Marca Japonesa 🇯🇵 preferida de los Argentinos 🇦🇷\n\nPara más información no dudes en llamar o WhatsApp\n\n📲3463402647 Lionel\n📲3463453956 Alejandro\n📲3463451561 Juan Manuel (Viamonte)\n📲3463645992 Carlos\n\n📍Canals - Cba\n\n#Biucar Multimarcas #biucar #usadosseleccionados"
   },
   {
-    "id": "chevrolet-onix-2017",
-    "name": "Chevrolet Onix 1.4 Ls Joy +",
-    "marca": "Chevrolet",
-    "marcaId": "chevrolet",
-    "ano": 2017,
-    "kilometraje": 999999,
+    "id": "toyota-rav4-2012",
+    "name": "Toyota RAV4 2.4 4x2 Automática",
+    "marca": "Toyota",
+    "marcaId": "toyota",
+    "ano": 2012,
+    "kilometraje": 255000,
     "precio": {
-      "valor": 3500000,
+      "valor": 999999,
       "moneda": "ARS"
     },
-    "categoria": "Hatchback",
-    "transmision": "Manual",
-    "motor": "1.4",
+    "categoria": "SUV",
+    "transmision": "Automática",
+    "motor": "2.4",
     "combustible": "Nafta",
     "puertas": 5,
     "images": [
@@ -167,9 +167,8 @@
       "6-5.webp",
       "6-6.webp",
       "6-7.webp",
-      "6-8.webp",
-      "6-9.webp"
+      "6-8.webp"
     ],
-    "descripcion": "Chevrolet Onix 1.4 Ls Joy +\n\nModelo 2017\n\nAnticipo de $3.500.000 y cuotas\n\nNos encontramos en Escobar, zona norte."
+    "descripcion": "RAV 4\n\nMarca: Toyota\n\nVersión: 2.4 4x2 Automática\n\nAño: 2012\n\nMotor: Naftero 2.4 de 170 caballos\n\nKms: 255.000\n\nEn muy buen estado general ✅\n\nDe 2da mano, muy cuidada!\n\nPara más información no dudes en llamar o WhatsApp\n\n📲3463402647 Lionel\n📲3463453956 Alejandro\n📲3463451561 Juan Manuel (Viamonte)\n📲3463645992 Carlos\n\n📍Alta Gracia - Cba\n\n#Biucar Multimarcas #biucar #usadosseleccionados"
   }
 ]
