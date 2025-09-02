@@ -39,10 +39,10 @@
       "valor": 3500000,
       "moneda": "ARS"
     },
-    "categoria": "Utilitario",
+    "categoria": "Pickup",
     "transmision": "Manual",
     "motor": "2.0",
-    "combustible": "Diésel",
+    "combustible": "Nafta",
     "puertas": 4,
     "images": [
       "2-1.webp",
