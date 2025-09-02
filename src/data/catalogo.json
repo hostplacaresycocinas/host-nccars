@@ -1,0 +1,175 @@
+[
+  {
+    "id": "ford-focus-2015",
+    "name": "Ford Focus 1.6 S MT",
+    "marca": "Ford",
+    "marcaId": "ford",
+    "ano": 2015,
+    "kilometraje": 999999,
+    "precio": {
+      "valor": 3500000,
+      "moneda": "ARS"
+    },
+    "categoria": "Hatchback",
+    "transmision": "Manual",
+    "motor": "1.6",
+    "combustible": "Nafta",
+    "puertas": 5,
+    "images": [
+      "1-1.webp",
+      "1-2.webp",
+      "1-3.webp",
+      "1-4.webp",
+      "1-5.webp",
+      "1-6.webp",
+      "1-7.webp",
+      "1-8.webp",
+      "1-9.webp"
+    ],
+    "descripcion": "Ford Focus 1.6 S MT\n\nModelo 2015\n\nAnticipo de $3.500.000 y cuotas\n\nNos encontramos en Escobar, zona norte."
+  },
+  {
+    "id": "volkswagen-amarok-2024",
+    "name": "Volkswagen Amarok 2.0 Trendline 4x2 MT",
+    "marca": "Volkswagen",
+    "marcaId": "volkswagen",
+    "ano": 2024,
+    "kilometraje": 0,
+    "precio": {
+      "valor": 3500000,
+      "moneda": "ARS"
+    },
+    "categoria": "Utilitario",
+    "transmision": "Manual",
+    "motor": "2.0",
+    "combustible": "Diésel",
+    "puertas": 4,
+    "images": [
+      "2-1.webp",
+      "2-2.webp",
+      "2-3.webp",
+      "2-4.webp",
+      "2-5.webp",
+      "2-6.webp",
+      "2-7.webp",
+      "2-8.webp",
+      "2-9.webp"
+    ],
+    "descripcion": "Volkswagen Amarok 2.0 Trendline 4x2 MT\n\nModelo 0 KM\n\nAnticipo de $3.500.000 y cuotas\n\nNos encontramos en Escobar, zona norte."
+  },
+  {
+    "id": "volkswagen-polo-2018",
+    "name": "Volkswagen Polo 1.6 Comfortline",
+    "marca": "Volkswagen",
+    "marcaId": "volkswagen",
+    "ano": 2018,
+    "kilometraje": 999999,
+    "precio": {
+      "valor": 3500000,
+      "moneda": "ARS"
+    },
+    "categoria": "Hatchback",
+    "transmision": "Manual",
+    "motor": "1.6",
+    "combustible": "Nafta",
+    "puertas": 5,
+    "images": [
+      "3-1.webp",
+      "3-2.webp",
+      "3-3.webp",
+      "3-4.webp",
+      "3-5.webp",
+      "3-6.webp",
+      "3-7.webp",
+      "3-8.webp"
+    ],
+    "descripcion": "Volkswagen Polo 1.6 Comfortline\n\nModelo 2018\n\nAnticipo de $3.500.000 y cuotas\n\nNos encontramos en Escobar, zona norte."
+  },
+  {
+    "id": "peugeot-308-2015",
+    "name": "Peugeot 308 1.6 Feline Tiptronic",
+    "marca": "Peugeot",
+    "marcaId": "peugeot",
+    "ano": 2015,
+    "kilometraje": 999999,
+    "precio": {
+      "valor": 3500000,
+      "moneda": "ARS"
+    },
+    "categoria": "Hatchback",
+    "transmision": "Manual",
+    "motor": "1.6",
+    "combustible": "Nafta",
+    "puertas": 5,
+    "images": [
+      "4-1.webp",
+      "4-2.webp",
+      "4-3.webp",
+      "4-4.webp",
+      "4-5.webp",
+      "4-6.webp",
+      "4-7.webp",
+      "4-8.webp",
+      "4-9.webp"
+    ],
+    "descripcion": "Peugeot 308 1.6 Feline Tiptronic\n\nModelo 2015\n\nAnticipo de $3.500.000 y cuotas\n\nNos encontramos en Escobar, zona norte."
+  },
+  {
+    "id": "volkswagen-vento-2017",
+    "name": "Volkswagen Vento 1.4 TSI",
+    "marca": "Volkswagen",
+    "marcaId": "volkswagen",
+    "ano": 2017,
+    "kilometraje": 999999,
+    "precio": {
+      "valor": 3500000,
+      "moneda": "ARS"
+    },
+    "categoria": "Sedán",
+    "transmision": "Manual",
+    "motor": "1.4",
+    "combustible": "Nafta",
+    "puertas": 4,
+    "images": [
+      "5-1.webp",
+      "5-2.webp",
+      "5-3.webp",
+      "5-4.webp",
+      "5-5.webp",
+      "5-6.webp",
+      "5-7.webp",
+      "5-8.webp",
+      "5-9.webp"
+    ],
+    "descripcion": "Volkswagen Vento 1.4 TSI\n\nModelo 2017\n\nAnticipo de $3.500.000 y cuotas\n\nNos encontramos en Escobar, zona norte."
+  },
+  {
+    "id": "chevrolet-onix-2017",
+    "name": "Chevrolet Onix 1.4 Ls Joy +",
+    "marca": "Chevrolet",
+    "marcaId": "chevrolet",
+    "ano": 2017,
+    "kilometraje": 999999,
+    "precio": {
+      "valor": 3500000,
+      "moneda": "ARS"
+    },
+    "categoria": "Hatchback",
+    "transmision": "Manual",
+    "motor": "1.4",
+    "combustible": "Nafta",
+    "puertas": 5,
+    "images": [
+      "6-1.webp",
+      "6-2.webp",
+      "6-3.webp",
+      "6-4.webp",
+      "6-5.webp",
+      "6-6.webp",
+      "6-7.webp",
+      "6-8.webp",
+      "6-9.webp"
+    ],
+    "descripcion": "Chevrolet Onix 1.4 Ls Joy +\n\nModelo 2017\n\nAnticipo de $3.500.000 y cuotas\n\nNos encontramos en Escobar, zona norte."
+  }
+]

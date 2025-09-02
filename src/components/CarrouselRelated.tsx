@@ -6,8 +6,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { company } from '@/app/constants/constants';
-import data from '@/data/data.json';
-import AutoScroll from 'embla-carousel-auto-scroll';
+import catalogo from '@/data/catalogo.json';
 
 interface Imagen {
   id: string;
@@ -59,14 +58,7 @@ interface CarrouselRelatedProps {
 }
 
 const CarrouselRelated = ({ title, currentCarId }: CarrouselRelatedProps) => {
-  const [emblaRef] = useEmblaCarousel({ dragFree: true, loop: true }, [
-    AutoScroll({
-      speed: 1,
-      stopOnInteraction: false,
-      startDelay: 0,
-      stopOnFocusIn: false,
-    }),
-  ]);
+  const [emblaRef] = useEmblaCarousel({ dragFree: true });
   const [clicked, setClicked] = useState(false);
   const [relatedCars, setRelatedCars] = useState<Auto[]>([]);
   const [cargando, setCargando] = useState(true);
@@ -77,7 +69,7 @@ const CarrouselRelated = ({ title, currentCarId }: CarrouselRelatedProps) => {
       setCargando(true);
       try {
         // Encontrar el auto actual y su categoría
-        const autoActual = data.cars.find((auto) => auto.id === currentCarId);
+        const autoActual = catalogo.find((auto) => auto.id === currentCarId);
         if (!autoActual) {
           throw new Error('Auto no encontrado');
         }
@@ -93,7 +85,7 @@ const CarrouselRelated = ({ title, currentCarId }: CarrouselRelatedProps) => {
         };
 
         // Obtener todos los autos excepto el actual
-        const autosDisponibles = data.cars.filter(
+        const autosDisponibles = catalogo.filter(
           (auto) => auto.id !== currentCarId
         );
 
@@ -102,40 +94,40 @@ const CarrouselRelated = ({ title, currentCarId }: CarrouselRelatedProps) => {
 
         const autosRelacionados = autosAleatorios.map((auto) => ({
           id: auto.id,
-          brand: auto.brand,
-          model: auto.mlTitle,
-          year: auto.year,
-          color: auto.color,
+          brand: auto.marca,
+          model: auto.name,
+          year: auto.ano,
+          color: '',
           price: {
-            valor: auto.price,
-            moneda: auto.currency,
+            valor: auto.precio.valor,
+            moneda: auto.precio.moneda,
           },
-          description: auto.description,
-          position: auto.position,
-          featured: auto.featured,
-          favorite: auto.favorite,
-          active: auto.active,
-          categoryId: auto.categoryId,
-          mileage: auto.mileage,
-          transmission: auto.transmission,
-          fuel: auto.fuel,
-          doors: auto.doors,
-          createdAt: auto.createdAt,
-          updatedAt: auto.updatedAt,
-          Images: auto.images.map((img, index) => ({
+          description: auto.descripcion,
+          position: 0,
+          featured: false,
+          favorite: false,
+          active: true,
+          categoryId: auto.categoria,
+          mileage: auto.kilometraje,
+          transmission: auto.transmision,
+          fuel: auto.combustible,
+          doors: auto.puertas,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          Images: auto.images.map((img: string, index: number) => ({
             id: `${auto.id}-img-${index}`,
             carId: auto.id,
-            imageUrl: img.thumbnailUrl,
-            thumbnailUrl: img.thumbnailUrl,
+            imageUrl: `/assets/catalogo/${img}`,
+            thumbnailUrl: `/assets/catalogo/${img}`,
             order: index,
-            createdAt: auto.createdAt,
-            updatedAt: auto.updatedAt,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
           })),
           Category: {
-            id: auto.Category.id,
-            name: auto.Category.name,
-            createdAt: auto.createdAt,
-            updatedAt: auto.updatedAt,
+            id: auto.categoria.toLowerCase(),
+            name: auto.categoria,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
           },
         }));
 
@@ -220,19 +212,17 @@ const CarrouselRelated = ({ title, currentCarId }: CarrouselRelatedProps) => {
           onMouseUp={() => setClicked(false)}
           onMouseDown={() => setClicked(true)}
           ref={emblaRef}
-          className={`${
-            clicked ? 'cursor-grabbing' : 'cursor-grab'
-          } select-none`}
+          className={`${clicked ? 'cursor-grabbing' : 'cursor-grab'}`}
         >
-          <div className='flex'>
+          <div className='flex gap-6 sm:gap-7 md:gap-8'>
             {relatedCars.map((auto) => (
               <Link
                 href={`/catalogo/${auto.id}`}
-                className='w-full relative overflow-hidden flex-[0_0_75%] min-[500px]:flex-[0_0_55%] sm:flex-[0_0_40%] lg:flex-[0_0_30%] xl:flex-[0_0_26%] ml-6 sm:ml-7 md:ml-8'
+                className='w-full relative overflow-hidden flex-[0_0_75%] min-[500px]:flex-[0_0_55%] sm:flex-[0_0_40%] lg:flex-[0_0_30%] xl:flex-[0_0_26%]'
                 key={auto.id}
               >
                 {/* Card container con borde que se ilumina */}
-                <div className='relative overflow-hidden group-hover:border-color-primary transition-all duration-500 h-full shadow-[0_8px_30px_-15px_rgba(0,0,0,0.7)] group-hover:shadow-[0_8px_30px_-10px_rgba(233,0,2,0.2)] select-none'>
+                <div className='relative overflow-hidden group-hover:border-color-primary transition-all duration-500 h-full shadow-[0_8px_30px_-15px_rgba(0,0,0,0.7)] group-hover:shadow-[0_8px_30px_-10px_rgba(233,0,2,0.2)]'>
                   {!auto.active && (
                     <div className='absolute top-0 left-0 w-full h-full bg-black/70 flex items-center justify-center z-20'>
                       <span className='bg-red-500 text-white text-sm font-medium px-3 py-1.5 rounded'>
@@ -242,7 +232,7 @@ const CarrouselRelated = ({ title, currentCarId }: CarrouselRelatedProps) => {
                   )}
 
                   {/* Contenedor de la imagen */}
-                  <div className='relative overflow-hidden aspect-[4/3] rounded-lg group'>
+                  <div className='relative overflow-hidden aspect-[4/3] rounded-xl group'>
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -253,7 +243,7 @@ const CarrouselRelated = ({ title, currentCarId }: CarrouselRelatedProps) => {
                         priority
                         width={600}
                         height={600}
-                        className='object-cover w-full h-full transition-transform duration-700 select-none pointer-events-none'
+                        className='object-cover w-full h-full transition-transform duration-700'
                         style={{
                           objectPosition: `center ${company.objectCover}`,
                         }}
@@ -299,76 +289,69 @@ const CarrouselRelated = ({ title, currentCarId }: CarrouselRelatedProps) => {
                   </div>
 
                   {/* Información del vehículo */}
-                  <div className='relative group'>
-                    {/* Gradiente base */}
-                    <div className='absolute inset-0 bg-gradient-to-b from-transparent to-white/20 rounded-lg'></div>
-                    {/* Gradiente hover */}
-                    <div className='absolute inset-0 bg-gradient-to-b from-transparent to-white/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out'></div>
-                    {/* Contenido */}
-                    <div className='relative z-10 p-4'>
-                      <h3
+                  <div className='py-3 relative group'>
+                    <h3
+                      className={`${
+                        company.dark
+                          ? 'group-hover:text-color-primary'
+                          : 'group-hover:text-color-primary-dark'
+                      } text-color-title text-xl md:text-[22px] font-bold tracking-tight truncate md:mb-1 transition-colors duration-300`}
+                    >
+                      {auto.model}
+                    </h3>
+
+                    <div
+                      className={`${
+                        company.price ? '' : 'hidden'
+                      } text-color-primary text-xl md:text-[22px] font-bold tracking-tight truncate md:mb-1 transition-colors duration-300`}
+                    >
+                      {auto.price.moneda === 'ARS' ? '$' : 'US$'}
+                      {auto.price.valor.toLocaleString('es-ES')}
+                    </div>
+
+                    {/* Diseño minimalista con separadores tipo | */}
+                    <div className='flex flex-wrap items-center text-color-text font-medium'>
+                      <span className=''>{auto.brand}</span>
+                      <span
                         className={`${
                           company.dark
-                            ? 'group-hover:text-color-primary'
-                            : 'group-hover:text-color-primary-dark'
-                        } text-color-title text-xl md:text-[22px] font-bold tracking-tight truncate md:mb-1 transition-colors duration-300`}
+                            ? 'text-color-primary'
+                            : 'text-color-primary'
+                        } mx-2`}
                       >
-                        {auto.model}
-                      </h3>
+                        |
+                      </span>
+                      <span>{auto.year}</span>
+                    </div>
 
-                      <div
+                    {/* Precio o etiqueta destacada */}
+                    <div className='flex justify-between items-center text-color-text mt-0.5'>
+                      {auto.mileage === 0 ? (
+                        <span className='text-sm font-semibold uppercase tracking-wider text-color-primary'>
+                          Nuevo <span className='text-color-primary'>•</span>{' '}
+                          {auto.mileage.toLocaleString('es-ES')} km
+                        </span>
+                      ) : (
+                        <span className='text-sm text-color-text font-medium uppercase tracking-wider'>
+                          Usado <span className='text-color-primary'>•</span>{' '}
+                          {auto.mileage.toLocaleString('es-ES')} km
+                        </span>
+                      )}
+                    </div>
+
+                    <div className='md:mt-1'>
+                      <span
                         className={`${
-                          company.price ? '' : 'hidden'
-                        } text-color-primary text-xl md:text-[22px] font-bold tracking-tight truncate md:mb-1 transition-colors duration-300`}
+                          company.dark
+                            ? 'text-color-primary group-hover:text-color-primary-dark'
+                            : 'text-color-primary group-hover:text-color-primary-dark'
+                        } inline-flex items-center  transition-colors font-semibold`}
                       >
-                        {auto.price.moneda === 'ARS' ? '$' : 'US$'}
-                        {auto.price.valor.toLocaleString('es-ES')}
-                      </div>
-
-                      {/* Diseño minimalista con separadores tipo | */}
-                      <div className='flex flex-wrap items-center text-color-text font-medium'>
-                        <span className=''>{auto.brand}</span>
-                        <span
-                          className={`${
-                            company.dark
-                              ? 'text-color-primary'
-                              : 'text-color-primary'
-                          } mx-2`}
-                        >
-                          |
+                        Ver más
+                        <span className='inline-block transform translate-x-0 group-hover:translate-x-1 transition-transform duration-300 ml-1'>
+                          →
                         </span>
-                        <span>{auto.year}</span>
-                      </div>
-
-                      {/* Precio o etiqueta destacada */}
-                      <div className='flex justify-between items-center text-color-text mt-0.5'>
-                        {auto.mileage === 0 ? (
-                          <span className='text-base font-semibold uppercase tracking-wider text-color-primary'>
-                            Nuevo <span className='text-color-primary'>•</span>{' '}
-                            {auto.mileage.toLocaleString('es-ES')} km
-                          </span>
-                        ) : (
-                          <span className='text-base text-color-text font-medium uppercase tracking-wider'>
-                            Usado <span className='text-color-primary'>•</span>{' '}
-                            {auto.mileage.toLocaleString('es-ES')} km
-                          </span>
-                        )}
-                      </div>
-
-                      <div className='md:mt-1'>
-                        <span
-                          className={`${
-                            company.dark
-                              ? 'text-color-primary group-hover:text-color-primary-dark'
-                              : 'text-color-primary group-hover:text-color-primary-dark'
-                          } inline-flex items-center  transition-colors font-semibold`}
-                        >
-                          Ver más
-                          <span className='inline-block transform translate-x-0 group-hover:translate-x-1 transition-transform duration-300 ml-1.5 text-lg font-bold'>
-                            →
-                          </span>
-                        </span>
-                      </div>
+                      </span>
                     </div>
                   </div>
                 </div>
