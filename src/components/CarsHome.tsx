@@ -9,23 +9,6 @@ import { company } from '@/app/constants/constants';
 import catalogo from '@/data/catalogo.json';
 import AutoScroll from 'embla-carousel-auto-scroll';
 
-interface Imagen {
-  id: string;
-  carId: string;
-  imageUrl: string;
-  thumbnailUrl: string;
-  order: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Categoria {
-  id: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
 interface Auto {
   id: string;
   name: string;
