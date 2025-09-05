@@ -6,27 +6,50 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { company } from '@/app/constants/constants';
-import catalogo from '@/data/catalogo.json';
+import data from '@/data/data.json';
 import AutoScroll from 'embla-carousel-auto-scroll';
+
+interface Imagen {
+  id: string;
+  carId: string;
+  imageUrl: string;
+  thumbnailUrl: string;
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface Categoria {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 interface Auto {
   id: string;
-  name: string;
-  marca: string;
-  marcaId: string;
-  ano: number;
-  kilometraje: number;
-  precio: {
+  brand: string;
+  model: string;
+  year: number;
+  color: string;
+  price: {
     valor: number;
     moneda: string;
   };
-  categoria: string;
-  transmision: string;
-  motor: string;
-  combustible: string;
-  puertas: number;
-  images: string[];
-  descripcion: string;
+  description: string;
+  position: number;
+  featured: boolean;
+  favorite: boolean;
+  active: boolean;
+  categoryId: string;
+  mileage: number;
+  transmission: string;
+  fuel: string;
+  doors: number;
+  createdAt: string;
+  updatedAt: string;
+  Images: Imagen[];
+  Category: Categoria;
 }
 
 interface CarsHomeProps {
@@ -51,23 +74,45 @@ const CarsHome = ({ title }: CarsHomeProps) => {
     const loadVehiculos = () => {
       setLoading(true);
       try {
-        const vehiculosProcesados = catalogo
+        const vehiculosProcesados = data.cars
           .slice(0, 6) // Máximo 6 vehículos
           .map((auto) => ({
             id: auto.id,
-            name: auto.name,
-            marca: auto.marca,
-            marcaId: auto.marcaId,
-            ano: auto.ano,
-            kilometraje: auto.kilometraje,
-            precio: auto.precio,
-            categoria: auto.categoria,
-            transmision: auto.transmision,
-            motor: auto.motor,
-            combustible: auto.combustible,
-            puertas: auto.puertas,
-            images: auto.images,
-            descripcion: auto.descripcion,
+            brand: auto.brand,
+            model: auto.mlTitle,
+            year: auto.year,
+            color: auto.color,
+            price: {
+              valor: auto.price,
+              moneda: auto.currency,
+            },
+            description: auto.description,
+            position: auto.position,
+            featured: auto.featured,
+            favorite: auto.favorite,
+            active: auto.active,
+            categoryId: auto.categoryId,
+            mileage: auto.mileage,
+            transmission: auto.transmission,
+            fuel: auto.fuel,
+            doors: auto.doors,
+            createdAt: auto.createdAt,
+            updatedAt: auto.updatedAt,
+            Images: auto.images.map((img, index) => ({
+              id: `${auto.id}-img-${index}`,
+              carId: auto.id,
+              imageUrl: img.thumbnailUrl,
+              thumbnailUrl: img.thumbnailUrl,
+              order: index,
+              createdAt: auto.createdAt,
+              updatedAt: auto.updatedAt,
+            })),
+            Category: {
+              id: auto.Category.id,
+              name: auto.Category.name,
+              createdAt: auto.createdAt,
+              updatedAt: auto.updatedAt,
+            },
           }));
 
         setVehiculos(vehiculosProcesados);
@@ -162,6 +207,14 @@ const CarsHome = ({ title }: CarsHomeProps) => {
               >
                 {/* Card container con borde que se ilumina */}
                 <div className='relative overflow-hidden group-hover:border-color-primary transition-all duration-500 h-full shadow-[0_8px_30px_-15px_rgba(0,0,0,0.7)] group-hover:shadow-[0_8px_30px_-10px_rgba(233,0,2,0.2)] select-none'>
+                  {!auto.active && (
+                    <div className='absolute top-0 left-0 w-full h-full bg-black/70 flex items-center justify-center z-20'>
+                      <span className='bg-red-500 text-white text-sm font-medium px-3 py-1.5 rounded'>
+                        Pausado
+                      </span>
+                    </div>
+                  )}
+
                   {/* Contenedor de la imagen */}
                   <div className='relative overflow-hidden aspect-[4/3] rounded-lg group'>
                     <motion.div
@@ -179,11 +232,10 @@ const CarsHome = ({ title }: CarsHomeProps) => {
                           objectPosition: `center ${company.objectCover}`,
                         }}
                         src={
-                          auto.images[0]
-                            ? `/assets/catalogo/${auto.images[0]}`
-                            : '/assets/placeholder.jpg'
+                          auto.Images.sort((a, b) => a.order - b.order)[0]
+                            ?.thumbnailUrl || '/assets/placeholder.webp'
                         }
-                        alt={`${auto.name}`}
+                        alt={`${auto.model}`}
                       />
                     </motion.div>
 
@@ -235,7 +287,7 @@ const CarsHome = ({ title }: CarsHomeProps) => {
                             : 'group-hover:text-color-primary-dark'
                         } text-color-title text-xl md:text-[22px] font-bold tracking-tight truncate md:mb-1 transition-colors duration-300`}
                       >
-                        {auto.name}
+                        {auto.model}
                       </h3>
 
                       <div
@@ -243,13 +295,13 @@ const CarsHome = ({ title }: CarsHomeProps) => {
                           company.price ? '' : 'hidden'
                         } text-color-primary text-xl md:text-[22px] font-bold tracking-tight truncate md:mb-1 transition-colors duration-300`}
                       >
-                        {auto.precio.moneda === 'ARS' ? '$' : 'US$'}
-                        {auto.precio.valor.toLocaleString('es-ES')}
+                        {auto.price.moneda === 'ARS' ? '$' : 'US$'}
+                        {auto.price.valor.toLocaleString('es-ES')}
                       </div>
 
                       {/* Diseño minimalista con separadores tipo | */}
                       <div className='flex flex-wrap items-center text-color-text font-medium'>
-                        <span className=''>{auto.marca}</span>
+                        <span className=''>{auto.brand}</span>
                         <span
                           className={`${
                             company.dark
@@ -259,20 +311,20 @@ const CarsHome = ({ title }: CarsHomeProps) => {
                         >
                           |
                         </span>
-                        <span>{auto.ano}</span>
+                        <span>{auto.year}</span>
                       </div>
 
                       {/* Precio o etiqueta destacada */}
                       <div className='flex justify-between items-center text-color-text mt-0.5'>
-                        {auto.kilometraje === 0 ? (
+                        {auto.mileage === 0 ? (
                           <span className='text-base font-semibold uppercase tracking-wider text-color-primary'>
                             Nuevo <span className='text-color-primary'>•</span>{' '}
-                            {auto.kilometraje.toLocaleString('es-ES')} km
+                            {auto.mileage.toLocaleString('es-ES')} km
                           </span>
                         ) : (
                           <span className='text-base text-color-text font-medium uppercase tracking-wider'>
                             Usado <span className='text-color-primary'>•</span>{' '}
-                            {auto.kilometraje.toLocaleString('es-ES')} km
+                            {auto.mileage.toLocaleString('es-ES')} km
                           </span>
                         )}
                       </div>
