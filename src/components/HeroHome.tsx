@@ -27,7 +27,7 @@ const HeroHome = () => {
                   transition={{ duration: 0.5 }}
                   className='uppercase text-[28px] sm:text-4xl md:text-4xl lg:text-5xl xl:text-7xl font-bold text-color-primary-light'
                 >
-                  Vehículos Seleccionados
+                  Tu próximo vehículo
                 </motion.h2>
               </div>
               <div className='md:gap-3 text-nowrap lg:mb-2'>
@@ -37,7 +37,7 @@ const HeroHome = () => {
                   transition={{ duration: 0.5, delay: 0.1 }}
                   className='uppercase text-[28px] sm:text-4xl md:text-4xl lg:text-5xl xl:text-7xl font-bold text-color-title-light'
                 >
-                  {company.name}
+                  esta en {company.name}
                 </motion.h2>
               </div>
             </div>
