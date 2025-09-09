@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { company } from '@/app/constants/constants';
 import HeroCarousel from './HeroCarousel';
 import { motion } from 'framer-motion';
 
@@ -25,9 +24,10 @@ const HeroHome = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
-                  className='uppercase text-[28px] sm:text-4xl md:text-4xl lg:text-5xl xl:text-7xl font-bold text-color-primary-light'
+                  className='uppercase text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-[85px] font-bold text-color-primary-light'
                 >
-                  Tu próximo vehículo
+                  Concesionario
+                  {/* Tu próximo vehículo */}
                 </motion.h2>
               </div>
               <div className='md:gap-3 text-nowrap lg:mb-2'>
@@ -35,9 +35,10 @@ const HeroHome = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.1 }}
-                  className='uppercase text-[28px] sm:text-4xl md:text-4xl lg:text-5xl xl:text-7xl font-bold text-color-title-light'
+                  className='uppercase text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-[85px] font-bold text-color-title-light'
                 >
-                  esta en {company.name}
+                  Multimarcas
+                  {/* esta en {company.name} */}
                 </motion.h2>
               </div>
             </div>
