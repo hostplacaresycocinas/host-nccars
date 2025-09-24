@@ -122,9 +122,9 @@ const Header = () => {
             } transition-all`}
           >
             {isMenuOpen ? (
-              <CloseIcon className='w-8 h-8' />
+              <CloseIcon className='w-9 h-9' />
             ) : (
-              <HamburguerIcon className='w-8 h-8' />
+              <HamburguerIcon className='w-9 h-9' />
             )}
           </button>
         </article>
