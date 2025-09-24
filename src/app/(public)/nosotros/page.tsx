@@ -84,14 +84,16 @@ const NosotrosPage = () => {
                 en realidad
               </h2>
               <p className='text-lg md:text-xl text-gray-600 leading-relaxed'>
-                {company.name} nació de la pasión por los autos y el compromiso
-                con nuestros clientes. Desde nuestros inicios, nos hemos
-                dedicado a seleccionar cuidadosamente cada vehículo.
+                {company.name} nació en 1996 de la pasión por los autos y el
+                compromiso con nuestros clientes. Durante estas casi tres
+                décadas, nos hemos dedicado a seleccionar cuidadosamente cada
+                vehículo y a construir relaciones sólidas basadas en la
+                confianza.
               </p>
               <p className='text-lg md:text-xl text-gray-600 leading-relaxed'>
-                Hoy, somos referentes en el mercado de autos usados, reconocidos
-                por nuestra transparencia y el acompañamiento integral que
-                brindamos a cada cliente.
+                Hoy, con 28 años de experiencia en el mercado automotriz, somos
+                referentes reconocidos por nuestra transparencia, calidad y el
+                acompañamiento integral que brindamos a cada cliente.
               </p>
 
               {/* Estadísticas */}
