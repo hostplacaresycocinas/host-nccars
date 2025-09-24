@@ -95,7 +95,7 @@ const ContactoPage = () => {
                           <h3 className='text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-color-title-light mb-1 sm:mb-2'>
                             {sede.title}
                           </h3>
-                          <p className='text-sm sm:text-base md:text-lg lg:text-xl text-white/90 mb-2 sm:mb-3'>
+                          <p className='text-base sm:text-lg md:text-lg lg:text-2xl text-white/90 mb-2 sm:mb-3'>
                             {sede.adress}, {sede.city}
                           </p>
 
@@ -104,7 +104,7 @@ const ContactoPage = () => {
                             {sede.schedule.map((schedule, idx) => (
                               <p
                                 key={idx}
-                                className='text-white/90 text-xs sm:text-sm md:text-base lg:text-lg'
+                                className='text-white/90 text-sm md:text-base lg:text-xl'
                               >
                                 {schedule}
                               </p>

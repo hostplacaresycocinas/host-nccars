@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
-import { company } from '@/app/constants/constants';
+import { company, API_BASE_URL, TENANT } from '@/app/constants/constants';
 import ArrowIcon from '@/components/icons/ArrowIcon';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -18,18 +18,25 @@ import {
 import CloseIcon from '@/components/icons/CloseIcon';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
-import data from '@/data/data.json';
+
+interface Imagen {
+  thumbnailUrl: string;
+}
+
+interface Categoria {
+  id: string;
+  name: string;
+}
 
 interface ApiCar {
   id: string;
   brand: string;
   model: string;
+  mlTitle: string;
   year: number;
   color: string;
-  price: {
-    valor: number;
-    moneda: string;
-  };
+  price: number;
+  currency: 'USD' | 'ARS';
   description: string;
   categoryId: string;
   mileage: number;
@@ -42,24 +49,13 @@ interface ApiCar {
   active: boolean;
   createdAt: string;
   updatedAt: string;
-  Category: {
-    id: string;
-    name: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-  Images: {
-    thumbnailUrl: string;
-    imageUrl: string;
-    order: number;
-  }[];
+  Category: Categoria;
+  images: Imagen[];
 }
 
 interface Category {
   id: string;
   name: string;
-  createdAt: string;
-  updatedAt: string;
 }
 
 const ITEMS_PER_PAGE = 12;
@@ -82,31 +78,40 @@ const CatalogoPage = () => {
   const [categorias, setCategorias] = useState<Category[]>([]);
 
   // Función para obtener todas las marcas disponibles
-  const fetchMarcas = () => {
+  const fetchMarcas = async () => {
     try {
-      // Obtener marcas únicas del catálogo
-      const marcas = Array.from(
-        new Set(data.cars.map((car) => car.brand))
-      ).sort();
+      const response = await fetch(
+        `${API_BASE_URL}/api/cars/brands?tenant=${TENANT}`
+      );
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+      const data = await response.json();
+      const marcas = data.map((brand: string) => brand).sort();
       setTodasLasMarcas(marcas);
     } catch (error) {
       console.error('Error al cargar las marcas:', error);
     }
   };
 
-  // Función para obtener las categorías del catálogo
-  const fetchCategories = () => {
+  // Función para obtener las categorías
+  const fetchCategories = async () => {
     try {
-      // Obtener categorías únicas del catálogo
-      const categoriasUnicas = Array.from(
-        new Set(data.cars.map((car) => car.Category.name))
+      const response = await fetch(
+        `${API_BASE_URL}/api/categories?tenant=${TENANT}`
       );
-      const categoriasProcesadas = categoriasUnicas.map((cat) => ({
-        id: cat.toLowerCase(),
-        name: cat.charAt(0).toUpperCase() + cat.slice(1),
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      }));
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+      const data = await response.json();
+      const categoriasProcesadas = data.map(
+        (category: { id?: string; name: string }) => ({
+          id: category.id || category.name.toLowerCase(),
+          name:
+            category.name.charAt(0).toUpperCase() +
+            category.name.slice(1).toLowerCase(),
+        })
+      );
       setCategorias(categoriasProcesadas);
     } catch (error) {
       console.error('Error al cargar las categorías:', error);
@@ -114,83 +119,46 @@ const CatalogoPage = () => {
   };
 
   // Función para obtener los autos con filtros
-  const fetchCars = (
+  const fetchCars = async (
     page: number,
     filters?: { search?: string; marca?: string; categoria?: string }
   ) => {
     setLoading(true);
     try {
-      let filteredCars = [...data.cars];
+      // Construir query parameters
+      const params = new URLSearchParams();
+      params.append('tenant', TENANT);
+      params.append('page', page.toString());
+      params.append('limit', ITEMS_PER_PAGE.toString());
 
-      // Aplicar filtros
+      // Agregar filtros si existen
       if (filters?.search) {
-        const searchTerm = filters.search.toLowerCase();
-        filteredCars = filteredCars.filter(
-          (car) =>
-            car.mlTitle.toLowerCase().includes(searchTerm) ||
-            car.brand.toLowerCase().includes(searchTerm)
-        );
+        params.append('model', filters.search); // Usar 'model' en lugar de 'search'
       }
       if (filters?.marca) {
-        filteredCars = filteredCars.filter(
-          (car) => car.brand.toLowerCase() === filters.marca?.toLowerCase()
-        );
+        params.append('brand', filters.marca);
       }
       if (filters?.categoria) {
-        filteredCars = filteredCars.filter(
-          (car) =>
-            car.Category.name.toLowerCase() === filters.categoria?.toLowerCase()
-        );
+        // Normalizar la categoría antes de enviarla al API
+        params.append('category', filters.categoria.toLowerCase());
       }
 
-      // Calcular paginación
-      const total = filteredCars.length;
-      const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
-      const start = (page - 1) * ITEMS_PER_PAGE;
-      const end = start + ITEMS_PER_PAGE;
+      const response = await fetch(
+        `${API_BASE_URL}/api/cars?${params.toString()}`
+      );
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+      const data = await response.json();
 
-      // Obtener autos de la página actual
-      const paginatedCars: ApiCar[] = filteredCars
-        .slice(start, end)
-        .map((car) => ({
-          id: car.id,
-          brand: car.brand,
-          model: car.mlTitle,
-          year: car.year,
-          color: car.color,
-          price: {
-            valor: car.price,
-            moneda: car.currency,
-          },
-          description: car.description,
-          categoryId: car.categoryId,
-          mileage: car.mileage,
-          transmission: car.transmission,
-          fuel: car.fuel,
-          doors: car.doors,
-          position: car.position,
-          featured: car.featured,
-          favorite: car.favorite,
-          active: car.active,
-          createdAt: car.createdAt,
-          updatedAt: car.updatedAt,
-          Category: {
-            id: car.Category.id,
-            name: car.Category.name,
-            createdAt: car.createdAt,
-            updatedAt: car.updatedAt,
-          },
-          Images: car.images.map(
-            (img: { thumbnailUrl: string }, index: number) => ({
-              thumbnailUrl: img.thumbnailUrl,
-              imageUrl: img.thumbnailUrl,
-              order: index,
-            })
-          ),
-        }));
+      // Filtrar vehículos que tienen al menos 1 imagen
+      const filteredCars = (data.cars || []).filter(
+        (car: ApiCar) =>
+          car.images && car.images.length > 0 && car.images[0]?.thumbnailUrl
+      );
 
-      setCars(paginatedCars);
-      setTotalPages(totalPages);
+      setCars(filteredCars);
+      setTotalPages(data.totalPages || 1);
     } catch (error) {
       console.error('Error al cargar los vehículos:', error);
     } finally {
@@ -286,22 +254,8 @@ const CatalogoPage = () => {
     executeSearch(searchValue);
   };
 
-  const filteredProducts = cars.filter((car) => {
-    const normalizedProductName = car.model
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
-
-    const matchesSearch = normalizedProductName
-      .toLowerCase()
-      .includes(searchFilter.toLowerCase());
-
-    const matchesMarca = !marcaFilter || car.brand === marcaFilter;
-    const matchesCategoria =
-      !categoriaFilter ||
-      car.Category.name.toLowerCase() === categoriaFilter.toLowerCase();
-
-    return matchesSearch && matchesMarca && matchesCategoria;
-  });
+  // Los vehículos ya vienen filtrados del backend, no necesitamos filtrar localmente
+  const filteredProducts = cars;
 
   return (
     <div className='relative'>
@@ -581,7 +535,7 @@ const CatalogoPage = () => {
         </div>
 
         <>
-          {loading && filteredProducts.length === 0 ? (
+          {loading ? (
             <div className='flex justify-center items-center min-h-[600px]'>
               <div className='animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-color-primary'></div>
             </div>
@@ -636,12 +590,13 @@ const CatalogoPage = () => {
                                   objectPosition: `center ${company.objectCover}`,
                                 }}
                                 src={
-                                  car.Images.sort(
-                                    (a, b) => a.order - b.order
-                                  )[0]?.thumbnailUrl ||
-                                  '/assets/placeholder.webp'
+                                  car.images &&
+                                  car.images.length > 0 &&
+                                  car.images[0]?.thumbnailUrl
+                                    ? car.images[0].thumbnailUrl
+                                    : '/assets/placeholder.webp'
                                 }
-                                alt={`${car.model}`}
+                                alt={`${car.mlTitle || car.model}`}
                               />
                             </motion.div>
 
@@ -687,7 +642,7 @@ const CatalogoPage = () => {
                                   : 'group-hover:text-color-primary-dark'
                               } text-color-title text-xl md:text-[22px] font-bold tracking-tight truncate md:mb-1 transition-colors duration-300`}
                             >
-                              {car.model}
+                              {car.mlTitle || car.model}
                             </h3>
 
                             <div
@@ -695,8 +650,8 @@ const CatalogoPage = () => {
                                 company.price ? '' : 'hidden'
                               } text-color-primary text-xl md:text-[22px] font-bold tracking-tight truncate md:mb-1 transition-colors duration-300`}
                             >
-                              {car.price.moneda === 'ARS' ? '$' : 'US$'}
-                              {car.price.valor.toLocaleString('es-ES')}
+                              {car.currency === 'ARS' ? '$' : 'US$'}
+                              {car.price.toLocaleString('es-ES')}
                             </div>
 
                             {/* Diseño minimalista con separadores tipo | */}

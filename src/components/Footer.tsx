@@ -7,6 +7,7 @@ import Image from 'next/image';
 import InstagramIcon from './icons/InstagramIcon';
 import FacebookIcon from './icons/FacebookIcon';
 import WhatsappIcon from './icons/WhatsappIcon';
+import TiktokIcon from './icons/TiktokIcon';
 
 import Link from 'next/link';
 import OnlymotorsLogo from './icons/OnlymotorsLogo';
@@ -66,6 +67,21 @@ const Footer = () => {
                       rel='noopener noreferrer'
                     >
                       <InstagramIcon
+                        className={`w-8 h-8 ${
+                          company.darkmode
+                            ? 'text-color-text-light hover:text-color-primary-light'
+                            : 'text-color-text hover:text-color-primary'
+                        }  transition-colors`}
+                      />
+                    </a>
+                  )}
+                  {company.tiktok && (
+                    <a
+                      href={`https://www.tiktok.com/@${company.tiktok}/`}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
+                      <TiktokIcon
                         className={`w-8 h-8 ${
                           company.darkmode
                             ? 'text-color-text-light hover:text-color-primary-light'
@@ -215,6 +231,31 @@ const Footer = () => {
                       } transition-colors`}
                     >
                       @{company.instagram}
+                    </a>
+                  </div>
+                )}
+                {company.tiktok && (
+                  <div>
+                    <h4
+                      className={`${
+                        company.darkmode
+                          ? 'text-color-title-light'
+                          : 'text-color-title'
+                      }`}
+                    >
+                      Tiktok
+                    </h4>
+                    <a
+                      href={`https://www.tiktok.com/@${company.tiktok}/`}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className={`${
+                        company.darkmode
+                          ? 'text-color-text-light hover:text-color-primary-light'
+                          : 'text-color-text hover:text-color-primary'
+                      } transition-colors`}
+                    >
+                      @{company.tiktok}
                     </a>
                   </div>
                 )}

@@ -5,51 +5,43 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { company } from '@/app/constants/constants';
-import data from '@/data/data.json';
+import { company, API_BASE_URL, TENANT } from '@/app/constants/constants';
 import AutoScroll from 'embla-carousel-auto-scroll';
 
 interface Imagen {
-  id: string;
-  carId: string;
-  imageUrl: string;
   thumbnailUrl: string;
-  order: number;
-  createdAt: string;
-  updatedAt: string;
+  imageUrl?: string;
 }
 
 interface Categoria {
   id: string;
   name: string;
-  createdAt: string;
-  updatedAt: string;
 }
 
-interface Auto {
+interface ApiCar {
   id: string;
   brand: string;
   model: string;
+  mlTitle: string;
   year: number;
   color: string;
-  price: {
-    valor: number;
-    moneda: string;
-  };
+  price: number;
+  currency: 'USD' | 'ARS';
   description: string;
+  categoryId: string;
+  mileage: number;
+  mlEngine?: string;
+  transmission: string;
+  fuel: string;
+  doors: number;
   position: number;
   featured: boolean;
   favorite: boolean;
   active: boolean;
-  categoryId: string;
-  mileage: number;
-  transmission: string;
-  fuel: string;
-  doors: number;
   createdAt: string;
   updatedAt: string;
-  Images: Imagen[];
   Category: Categoria;
+  images: Imagen[];
 }
 
 interface CarsHomeProps {
@@ -66,56 +58,38 @@ const CarsHome = ({ title }: CarsHomeProps) => {
     }),
   ]);
   const [clicked, setClicked] = useState(false);
-  const [vehiculos, setVehiculos] = useState<Auto[]>([]);
+  const [vehiculos, setVehiculos] = useState<ApiCar[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadVehiculos = () => {
+    const loadVehiculos = async () => {
       setLoading(true);
       try {
-        const vehiculosProcesados = data.cars
-          .slice(0, 6) // Máximo 6 vehículos
-          .map((auto) => ({
-            id: auto.id,
-            brand: auto.brand,
-            model: auto.mlTitle,
-            year: auto.year,
-            color: auto.color,
-            price: {
-              valor: auto.price,
-              moneda: auto.currency,
-            },
-            description: auto.description,
-            position: auto.position,
-            featured: auto.featured,
-            favorite: auto.favorite,
-            active: auto.active,
-            categoryId: auto.categoryId,
-            mileage: auto.mileage,
-            transmission: auto.transmission,
-            fuel: auto.fuel,
-            doors: auto.doors,
-            createdAt: auto.createdAt,
-            updatedAt: auto.updatedAt,
-            Images: auto.images.map((img, index) => ({
-              id: `${auto.id}-img-${index}`,
-              carId: auto.id,
-              imageUrl: img.thumbnailUrl,
-              thumbnailUrl: img.thumbnailUrl,
-              order: index,
-              createdAt: auto.createdAt,
-              updatedAt: auto.updatedAt,
-            })),
-            Category: {
-              id: auto.Category.id,
-              name: auto.Category.name,
-              createdAt: auto.createdAt,
-              updatedAt: auto.updatedAt,
-            },
-          }));
+        // Construir query parameters para obtener vehículos
+        const params = new URLSearchParams();
+        params.append('tenant', TENANT);
+        params.append('page', '1');
+        params.append('limit', '10'); // Máximo 10 vehículos
 
-        setVehiculos(vehiculosProcesados);
+        const response = await fetch(
+          `${API_BASE_URL}/api/cars?${params.toString()}`
+        );
+
+        if (!response.ok) {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+
+        // Filtrar vehículos que tienen al menos 1 imagen
+        const filteredCars = (data.cars || []).filter(
+          (car: ApiCar) =>
+            car.images && car.images.length > 0 && car.images[0]?.thumbnailUrl
+        );
+
+        // Tomar solo los primeros 6 vehículos para el home
+        setVehiculos(filteredCars.slice(0, 6));
       } catch (err) {
         console.error('Error al cargar vehículos:', err);
         setError('No se pudieron cargar los vehículos');
@@ -199,15 +173,15 @@ const CarsHome = ({ title }: CarsHomeProps) => {
         >
           <div className='flex'>
             {/* Vehículos */}
-            {vehiculos.map((auto) => (
+            {vehiculos.map((car) => (
               <Link
-                href={`/catalogo/${auto.id}`}
+                href={`/catalogo/${car.id}`}
                 className='w-full relative overflow-hidden flex-[0_0_75%] min-[500px]:flex-[0_0_55%] sm:flex-[0_0_40%] lg:flex-[0_0_30%] xl:flex-[0_0_26%] ml-6 sm:ml-7 md:ml-8'
-                key={auto.id}
+                key={car.id}
               >
                 {/* Card container con borde que se ilumina */}
                 <div className='relative overflow-hidden group-hover:border-color-primary transition-all duration-500 h-full shadow-[0_8px_30px_-15px_rgba(0,0,0,0.7)] group-hover:shadow-[0_8px_30px_-10px_rgba(233,0,2,0.2)] select-none'>
-                  {!auto.active && (
+                  {!car.active && (
                     <div className='absolute top-0 left-0 w-full h-full bg-black/70 flex items-center justify-center z-20'>
                       <span className='bg-red-500 text-white text-sm font-medium px-3 py-1.5 rounded'>
                         Pausado
@@ -232,10 +206,13 @@ const CarsHome = ({ title }: CarsHomeProps) => {
                           objectPosition: `center ${company.objectCover}`,
                         }}
                         src={
-                          auto.Images.sort((a, b) => a.order - b.order)[0]
-                            ?.thumbnailUrl || '/assets/placeholder.webp'
+                          car.images &&
+                          car.images.length > 0 &&
+                          car.images[0]?.thumbnailUrl
+                            ? car.images[0].thumbnailUrl
+                            : '/assets/placeholder.webp'
                         }
-                        alt={`${auto.model}`}
+                        alt={`${car.mlTitle || car.model}`}
                       />
                     </motion.div>
 
@@ -287,7 +264,7 @@ const CarsHome = ({ title }: CarsHomeProps) => {
                             : 'group-hover:text-color-primary-dark'
                         } text-color-title text-xl md:text-[22px] font-bold tracking-tight truncate md:mb-1 transition-colors duration-300`}
                       >
-                        {auto.model}
+                        {car.mlTitle || car.model}
                       </h3>
 
                       <div
@@ -295,13 +272,13 @@ const CarsHome = ({ title }: CarsHomeProps) => {
                           company.price ? '' : 'hidden'
                         } text-color-primary text-xl md:text-[22px] font-bold tracking-tight truncate md:mb-1 transition-colors duration-300`}
                       >
-                        {auto.price.moneda === 'ARS' ? '$' : 'US$'}
-                        {auto.price.valor.toLocaleString('es-ES')}
+                        {car.currency === 'ARS' ? '$' : 'US$'}
+                        {car.price.toLocaleString('es-ES')}
                       </div>
 
                       {/* Diseño minimalista con separadores tipo | */}
                       <div className='flex flex-wrap items-center text-color-text font-medium'>
-                        <span className=''>{auto.brand}</span>
+                        <span className=''>{car.brand}</span>
                         <span
                           className={`${
                             company.dark
@@ -311,20 +288,20 @@ const CarsHome = ({ title }: CarsHomeProps) => {
                         >
                           |
                         </span>
-                        <span>{auto.year}</span>
+                        <span>{car.year}</span>
                       </div>
 
                       {/* Precio o etiqueta destacada */}
                       <div className='flex justify-between items-center text-color-text mt-0.5'>
-                        {auto.mileage === 0 ? (
+                        {car.mileage === 0 ? (
                           <span className='text-base font-semibold uppercase tracking-wider text-color-primary'>
                             Nuevo <span className='text-color-primary'>•</span>{' '}
-                            {auto.mileage.toLocaleString('es-ES')} km
+                            {car.mileage.toLocaleString('es-ES')} km
                           </span>
                         ) : (
                           <span className='text-base text-color-text font-medium uppercase tracking-wider'>
                             Usado <span className='text-color-primary'>•</span>{' '}
-                            {auto.mileage.toLocaleString('es-ES')} km
+                            {car.mileage.toLocaleString('es-ES')} km
                           </span>
                         )}
                       </div>

@@ -5,27 +5,47 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { company } from '@/app/constants/constants';
-import data from '@/data/data.json';
+import { company, API_BASE_URL, TENANT } from '@/app/constants/constants';
 import AutoScroll from 'embla-carousel-auto-scroll';
 
 interface Imagen {
-  id: string;
-  carId: string;
-  imageUrl: string;
   thumbnailUrl: string;
-  order: number;
-  createdAt: string;
-  updatedAt: string;
+  imageUrl?: string;
+  order?: number;
 }
 
 interface Categoria {
   id: string;
   name: string;
-  createdAt: string;
-  updatedAt: string;
 }
 
+interface ApiCar {
+  id: string;
+  brand: string;
+  model: string;
+  mlTitle: string;
+  year: number;
+  color: string;
+  price: number;
+  currency: 'USD' | 'ARS';
+  description: string;
+  categoryId: string;
+  mileage: number;
+  mlEngine?: string;
+  transmission: string;
+  fuel: string;
+  doors: number;
+  position: number;
+  featured: boolean;
+  favorite: boolean;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
+  Category: Categoria;
+  images: Imagen[];
+}
+
+// Interface para el formato interno del componente
 interface Auto {
   id: string;
   brand: string;
@@ -73,14 +93,32 @@ const CarrouselRelated = ({ title, currentCarId }: CarrouselRelatedProps) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const obtenerRelacionados = () => {
+    const obtenerRelacionados = async () => {
       setCargando(true);
       try {
-        // Encontrar el auto actual y su categoría
-        const autoActual = data.cars.find((auto) => auto.id === currentCarId);
-        if (!autoActual) {
-          throw new Error('Auto no encontrado');
+        // Obtener vehículos relacionados desde la API
+        const params = new URLSearchParams();
+        params.append('tenant', TENANT);
+        params.append('limit', '20'); // Obtener más vehículos para tener mejor selección
+
+        const response = await fetch(
+          `${API_BASE_URL}/api/cars?${params.toString()}`
+        );
+
+        if (!response.ok) {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
         }
+
+        const data = await response.json();
+
+        // Filtrar vehículos que tienen al menos 1 imagen y no son el vehículo actual
+        const autosDisponibles = (data.cars || []).filter(
+          (car: ApiCar) =>
+            car.id !== currentCarId &&
+            car.images &&
+            car.images.length > 0 &&
+            car.images[0]?.thumbnailUrl
+        );
 
         // Función para mezclar array aleatoriamente (Fisher-Yates shuffle)
         const shuffleArray = <T,>(array: T[]): T[] => {
@@ -92,18 +130,16 @@ const CarrouselRelated = ({ title, currentCarId }: CarrouselRelatedProps) => {
           return shuffled;
         };
 
-        // Obtener todos los autos excepto el actual
-        const autosDisponibles = data.cars.filter(
-          (auto) => auto.id !== currentCarId
-        );
-
         // Mezclar aleatoriamente y tomar máximo 10
-        const autosAleatorios = shuffleArray(autosDisponibles).slice(0, 10);
+        const autosAleatorios = shuffleArray(autosDisponibles).slice(
+          0,
+          10
+        ) as ApiCar[];
 
-        const autosRelacionados = autosAleatorios.map((auto) => ({
+        const autosRelacionados = autosAleatorios.map((auto: ApiCar) => ({
           id: auto.id,
           brand: auto.brand,
-          model: auto.mlTitle,
+          model: auto.mlTitle || auto.model,
           year: auto.year,
           color: auto.color,
           price: {
@@ -123,35 +159,28 @@ const CarrouselRelated = ({ title, currentCarId }: CarrouselRelatedProps) => {
           createdAt: auto.createdAt,
           updatedAt: auto.updatedAt,
           Images: auto.images.map((img, index) => ({
-            id: `${auto.id}-img-${index}`,
-            carId: auto.id,
-            imageUrl: img.thumbnailUrl,
             thumbnailUrl: img.thumbnailUrl,
+            imageUrl: img.imageUrl || img.thumbnailUrl,
             order: index,
-            createdAt: auto.createdAt,
-            updatedAt: auto.updatedAt,
           })),
           Category: {
             id: auto.Category.id,
             name: auto.Category.name,
-            createdAt: auto.createdAt,
-            updatedAt: auto.updatedAt,
           },
         }));
 
         setRelatedCars(autosRelacionados);
       } catch (err) {
-        console.error(
-          'Error al cargar vehículos relacionados del catálogo:',
-          err
-        );
+        console.error('Error al cargar vehículos relacionados de la API:', err);
         setError('No se pudieron cargar los vehículos relacionados');
       } finally {
         setCargando(false);
       }
     };
 
-    obtenerRelacionados();
+    if (currentCarId) {
+      obtenerRelacionados();
+    }
   }, [currentCarId]);
 
   if (cargando) {
@@ -258,8 +287,9 @@ const CarrouselRelated = ({ title, currentCarId }: CarrouselRelatedProps) => {
                           objectPosition: `center ${company.objectCover}`,
                         }}
                         src={
-                          auto.Images.sort((a, b) => a.order - b.order)[0]
-                            ?.thumbnailUrl || '/assets/placeholder.webp'
+                          auto.Images.sort(
+                            (a, b) => (a.order || 0) - (b.order || 0)
+                          )[0]?.thumbnailUrl || '/assets/placeholder.webp'
                         }
                         alt={`${auto.model}`}
                       />

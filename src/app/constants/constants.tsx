@@ -6,11 +6,12 @@ export const company = {
   price: true,
   objectCover: '50%',
   id: 'nccars',
-  name: 'NC Cars',
+  name: 'NC.CARS',
   adress: null,
   city: null,
   email: 'info@nccars.com.ar',
   instagram: 'nccarsmultimarcas',
+  tiktok: 'nc.carsmultimarcas',
   facebook: null,
   whatsapp: ['1164236622'],
   googlemapsLink: null,
@@ -20,8 +21,8 @@ export const company = {
     'Compra y Venta de Autos: Vehículos seleccionados, atención personalizada.',
 };
 
-export const API_BASE_URL = 'https://dealership.agenciagrvity.com';
-export const TENANT = 'accotto-automotores';
+export const API_BASE_URL = 'https://only-motors.agenciagrvity.com';
+export const TENANT = 'nc-cars';
 
 export const metadataCompany = {
   metadataBase: 'https://nccars.vercel.app/',
@@ -80,7 +81,7 @@ export const preguntas = [
     id: 'preg-4',
     question: '¿Puedo ir a ver los autos?',
     answer:
-      '¡Por supuesto! Estamos ubicados en Av. Juan Bautista Alberdi 7008, CABA. Te invitamos a visitarnos en nuestro horario de atención para conocer nuestros vehículos personalmente.',
+      '¡Por supuesto! Tenemos dos sedes: NC Cars Moreno en Acceso Oeste KM.43, Moreno y NC Cars CABA en Av. Boyacá 2240, CABA. Te invitamos a visitarnos para conocer nuestros vehículos personalmente.',
   },
   {
     id: 'preg-5',
