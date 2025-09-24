@@ -25,7 +25,7 @@ const ContactoPage = () => {
               className='object-cover'
               priority
             />
-            <div className='absolute inset-0 bg-black/80 md:bg-black/70'></div>
+            <div className='absolute inset-0 bg-black/60 md:bg-black/70'></div>
           </div>
 
           {/* Contenido centrado */}
