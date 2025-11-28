@@ -6,42 +6,42 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { company, API_BASE_URL, TENANT } from '@/app/constants/constants';
-import AutoScroll from 'embla-carousel-auto-scroll';
 
-interface Imagen {
-  thumbnailUrl: string;
-  imageUrl?: string;
-}
-
-interface Categoria {
-  id: string;
-  name: string;
+interface FirstImage {
+  s3ImageUrl: string;
+  s3ThumbnailUrl: string;
+  order: number;
 }
 
 interface ApiCar {
   id: string;
+  credentialId: string;
+  itemId: string;
+  title: string;
+  status: string;
+  categoryId: string;
+  price: string;
+  availableQuantity: number;
+  soldQuantity: number;
+  condition: string;
+  listingTypeId: string;
+  permalink: string;
+  thumbnailUrl: string;
+  currencyId: string;
+  lastSyncedAt: string;
   brand: string;
   model: string;
-  mlTitle: string;
   year: number;
-  color: string;
-  price: number;
-  currency: 'USD' | 'ARS';
-  description: string;
-  categoryId: string;
-  mileage: number;
-  mlEngine?: string;
+  kilometers: number;
+  fuelType: string;
   transmission: string;
-  fuel: string;
   doors: number;
-  position: number;
-  featured: boolean;
-  favorite: boolean;
-  active: boolean;
+  color: string;
+  engineSize: string;
+  attributes: string;
   createdAt: string;
   updatedAt: string;
-  Category: Categoria;
-  images: Imagen[];
+  firstImage: FirstImage;
 }
 
 interface CarsHomeProps {
@@ -49,14 +49,7 @@ interface CarsHomeProps {
 }
 
 const CarsHome = ({ title }: CarsHomeProps) => {
-  const [emblaRef] = useEmblaCarousel({ dragFree: true, loop: true }, [
-    AutoScroll({
-      speed: 1,
-      stopOnInteraction: false,
-      startDelay: 0,
-      stopOnFocusIn: false,
-    }),
-  ]);
+  const [emblaRef] = useEmblaCarousel({ dragFree: true, loop: false });
   const [clicked, setClicked] = useState(false);
   const [vehiculos, setVehiculos] = useState<ApiCar[]>([]);
   const [loading, setLoading] = useState(true);
@@ -66,14 +59,14 @@ const CarsHome = ({ title }: CarsHomeProps) => {
     const loadVehiculos = async () => {
       setLoading(true);
       try {
-        // Construir query parameters para obtener vehículos
+        // Construir query parameters para obtener vehículos destacados
         const params = new URLSearchParams();
         params.append('tenant', TENANT);
         params.append('page', '1');
         params.append('limit', '10'); // Máximo 10 vehículos
 
         const response = await fetch(
-          `${API_BASE_URL}/api/cars?${params.toString()}`
+          `${API_BASE_URL}/api/items?${params.toString()}`
         );
 
         if (!response.ok) {
@@ -82,14 +75,15 @@ const CarsHome = ({ title }: CarsHomeProps) => {
 
         const data = await response.json();
 
-        // Filtrar vehículos que tienen al menos 1 imagen
-        const filteredCars = (data.cars || []).filter(
+        // Filtrar vehículos que tienen al menos 1 imagen y están activos
+        const filteredCars = (data.items || []).filter(
           (car: ApiCar) =>
-            car.images && car.images.length > 0 && car.images[0]?.thumbnailUrl
+            car.firstImage &&
+            car.firstImage.s3ThumbnailUrl &&
+            car.status === 'active'
         );
 
-        // Tomar solo los primeros 6 vehículos para el home
-        setVehiculos(filteredCars.slice(0, 6));
+        setVehiculos(filteredCars);
       } catch (err) {
         console.error('Error al cargar vehículos:', err);
         setError('No se pudieron cargar los vehículos');
@@ -171,17 +165,17 @@ const CarsHome = ({ title }: CarsHomeProps) => {
             clicked ? 'cursor-grabbing' : 'cursor-grab'
           } select-none`}
         >
-          <div className='flex'>
+          <div className='flex gap-6 sm:gap-7 md:gap-8'>
             {/* Vehículos */}
             {vehiculos.map((car) => (
               <Link
-                href={`/catalogo/${car.id}`}
-                className='w-full relative overflow-hidden flex-[0_0_75%] min-[500px]:flex-[0_0_55%] sm:flex-[0_0_40%] lg:flex-[0_0_30%] xl:flex-[0_0_26%] ml-6 sm:ml-7 md:ml-8'
+                href={`/catalogo/${car.itemId}`}
+                className='w-full relative overflow-hidden flex-[0_0_75%] min-[500px]:flex-[0_0_55%] sm:flex-[0_0_40%] lg:flex-[0_0_30%] xl:flex-[0_0_26%]'
                 key={car.id}
               >
                 {/* Card container con borde que se ilumina */}
-                <div className='relative overflow-hidden group-hover:border-color-primary transition-all duration-500 h-full shadow-[0_8px_30px_-15px_rgba(0,0,0,0.7)] group-hover:shadow-[0_8px_30px_-10px_rgba(233,0,2,0.2)] select-none'>
-                  {!car.active && (
+                <div className='relative overflow-hidden group-hover:border-color-primary transition-all duration-500 h-full shadow-[0_8px_30px_-15px_rgba(0,0,0,0.7)] group-hover:shadow-[0_8px_30px_-10px_rgba(233,0,2,0.2)]'>
+                  {car.status !== 'active' && (
                     <div className='absolute top-0 left-0 w-full h-full bg-black/70 flex items-center justify-center z-20'>
                       <span className='bg-red-500 text-white text-sm font-medium px-3 py-1.5 rounded'>
                         Pausado
@@ -190,7 +184,7 @@ const CarsHome = ({ title }: CarsHomeProps) => {
                   )}
 
                   {/* Contenedor de la imagen */}
-                  <div className='relative overflow-hidden aspect-[4/3] rounded-lg group'>
+                  <div className='relative overflow-hidden aspect-[4/3] rounded-xl group'>
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -201,18 +195,13 @@ const CarsHome = ({ title }: CarsHomeProps) => {
                         priority
                         width={600}
                         height={600}
-                        className='object-cover w-full h-full transition-transform duration-700 select-none pointer-events-none'
-                        style={{
-                          objectPosition: `center ${company.objectCover}`,
-                        }}
+                        className='object-cover w-full h-full transition-transform duration-700'
                         src={
-                          car.images &&
-                          car.images.length > 0 &&
-                          car.images[0]?.thumbnailUrl
-                            ? car.images[0].thumbnailUrl
+                          car.firstImage?.s3ThumbnailUrl
+                            ? car.firstImage.s3ThumbnailUrl
                             : '/assets/placeholder.webp'
                         }
-                        alt={`${car.mlTitle || car.model}`}
+                        alt={`${car.title || car.model}`}
                       />
                     </motion.div>
 
@@ -250,76 +239,75 @@ const CarsHome = ({ title }: CarsHomeProps) => {
                   </div>
 
                   {/* Información del vehículo */}
-                  <div className='relative group'>
-                    {/* Gradiente base */}
-                    <div className='absolute inset-0 bg-gradient-to-b from-transparent to-white/20 rounded-lg'></div>
-                    {/* Gradiente hover */}
-                    <div className='absolute inset-0 bg-gradient-to-b from-transparent to-white/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out'></div>
-                    {/* Contenido */}
-                    <div className='relative z-10 p-4'>
-                      <h3
-                        className={`${
-                          company.dark
-                            ? 'group-hover:text-color-primary'
-                            : 'group-hover:text-color-primary-dark'
-                        } text-color-title text-xl md:text-[22px] font-bold tracking-tight truncate md:mb-1 transition-colors duration-300`}
-                      >
-                        {car.mlTitle || car.model}
-                      </h3>
+                  <div className='py-3 relative group'>
+                    <h3
+                      className={`${
+                        company.dark
+                          ? 'group-hover:text-color-primary'
+                          : 'group-hover:text-color-primary-dark'
+                      } text-color-title text-lg md:text-xl font-bold tracking-tight truncate md:mb-1 transition-colors duration-300`}
+                    >
+                      {car.title || car.model}
+                    </h3>
 
+                    {car.price && parseFloat(car.price) > 0 ? (
                       <div
                         className={`${
                           company.price ? '' : 'hidden'
-                        } text-color-primary text-xl md:text-[22px] font-bold tracking-tight truncate md:mb-1 transition-colors duration-300`}
+                        } text-color-primary text-lg md:text-xl font-bold tracking-tight truncate md:mb-1 transition-colors duration-300`}
                       >
-                        {car.currency === 'ARS' ? '$' : 'US$'}
-                        {car.price.toLocaleString('es-ES')}
-                      </div>
-
-                      {/* Diseño minimalista con separadores tipo | */}
-                      <div className='flex flex-wrap items-center text-color-text font-medium'>
-                        <span className=''>{car.brand}</span>
-                        <span
-                          className={`${
-                            company.dark
-                              ? 'text-color-primary'
-                              : 'text-color-primary'
-                          } mx-2`}
-                        >
-                          |
-                        </span>
-                        <span>{car.year}</span>
-                      </div>
-
-                      {/* Precio o etiqueta destacada */}
-                      <div className='flex justify-between items-center text-color-text mt-0.5'>
-                        {car.mileage === 0 ? (
-                          <span className='text-base font-semibold uppercase tracking-wider text-color-primary'>
-                            Nuevo <span className='text-color-primary'>•</span>{' '}
-                            {car.mileage.toLocaleString('es-ES')} km
-                          </span>
-                        ) : (
-                          <span className='text-base text-color-text font-medium uppercase tracking-wider'>
-                            Usado <span className='text-color-primary'>•</span>{' '}
-                            {car.mileage.toLocaleString('es-ES')} km
-                          </span>
+                        {car.currencyId === 'ARS' ? '$' : 'US$'}
+                        {parseFloat(car.price).toLocaleString(
+                          car.currencyId === 'ARS' ? 'es-AR' : 'en-US'
                         )}
                       </div>
+                    ) : (
+                      ''
+                    )}
 
-                      <div className='md:mt-1'>
-                        <span
-                          className={`${
-                            company.dark
-                              ? 'text-color-primary group-hover:text-color-primary-dark'
-                              : 'text-color-primary group-hover:text-color-primary-dark'
-                          } inline-flex items-center transition-colors font-semibold`}
-                        >
-                          Ver más
-                          <span className='inline-block transform translate-x-0 group-hover:translate-x-1 transition-transform duration-300 ml-1.5 text-lg font-bold'>
-                            →
-                          </span>
+                    {/* Diseño minimalista con separadores tipo | */}
+                    <div className='flex flex-wrap items-center text-color-text font-medium'>
+                      <span className=''>{car.brand}</span>
+                      <span
+                        className={`${
+                          company.dark
+                            ? 'text-color-primary'
+                            : 'text-color-primary'
+                        } mx-2`}
+                      >
+                        |
+                      </span>
+                      <span>{car.year}</span>
+                    </div>
+
+                    {/* Precio o etiqueta destacada */}
+                    <div className='flex justify-between items-center text-color-text mt-0.5'>
+                      {car.kilometers === 0 ? (
+                        <span className='text-sm font-semibold uppercase tracking-wider text-color-primary'>
+                          Nuevo <span className='text-color-primary'>•</span>{' '}
+                          {car.kilometers.toLocaleString('es-ES')} km
                         </span>
-                      </div>
+                      ) : (
+                        <span className='text-sm text-color-text font-medium uppercase tracking-wider'>
+                          Usado <span className='text-color-primary'>•</span>{' '}
+                          {car.kilometers.toLocaleString('es-ES')} km
+                        </span>
+                      )}
+                    </div>
+
+                    <div className='md:mt-1'>
+                      <span
+                        className={`${
+                          company.dark
+                            ? 'text-color-primary group-hover:text-color-primary-dark'
+                            : 'text-color-primary group-hover:text-color-primary-dark'
+                        } inline-flex items-center  transition-colors font-semibold`}
+                      >
+                        Ver más
+                        <span className='inline-block transform translate-x-0 group-hover:translate-x-1 transition-transform duration-300 ml-1'>
+                          →
+                        </span>
+                      </span>
                     </div>
                   </div>
                 </div>

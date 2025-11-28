@@ -21,8 +21,8 @@ export const company = {
     'Compra y Venta de Autos: Vehículos seleccionados, atención personalizada.',
 };
 
-export const API_BASE_URL = 'https://only-motors.agenciagrvity.com';
-export const TENANT = 'nc-cars';
+export const API_BASE_URL = 'https://onlymotors-ml.agenciagrvity.com';
+export const TENANT = '540f8dc8-a2f5-4f15-a74b-d408fed27c01';
 
 export const metadataCompany = {
   metadataBase: 'https://nccars.com.ar/',
