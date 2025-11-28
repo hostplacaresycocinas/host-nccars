@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { company, API_BASE_URL, TENANT } from '@/app/constants/constants';
+import AutoScroll from 'embla-carousel-auto-scroll';
 
 interface FirstImage {
   s3ImageUrl: string;
@@ -49,7 +50,14 @@ interface CarsHomeProps {
 }
 
 const CarsHome = ({ title }: CarsHomeProps) => {
-  const [emblaRef] = useEmblaCarousel({ dragFree: true, loop: false });
+  const [emblaRef] = useEmblaCarousel({ dragFree: true, loop: true }, [
+    AutoScroll({
+      speed: 1,
+      stopOnInteraction: false,
+      startDelay: 0,
+      stopOnFocusIn: false,
+    }),
+  ]);
   const [clicked, setClicked] = useState(false);
   const [vehiculos, setVehiculos] = useState<ApiCar[]>([]);
   const [loading, setLoading] = useState(true);
@@ -165,12 +173,12 @@ const CarsHome = ({ title }: CarsHomeProps) => {
             clicked ? 'cursor-grabbing' : 'cursor-grab'
           } select-none`}
         >
-          <div className='flex gap-6 sm:gap-7 md:gap-8'>
+          <div className='flex'>
             {/* Vehículos */}
             {vehiculos.map((car) => (
               <Link
                 href={`/catalogo/${car.itemId}`}
-                className='w-full relative overflow-hidden flex-[0_0_75%] min-[500px]:flex-[0_0_55%] sm:flex-[0_0_40%] lg:flex-[0_0_30%] xl:flex-[0_0_26%]'
+                className='w-full relative overflow-hidden flex-[0_0_75%] min-[500px]:flex-[0_0_55%] sm:flex-[0_0_40%] lg:flex-[0_0_30%] xl:flex-[0_0_26%] ml-6 sm:ml-7 md:ml-8'
                 key={car.id}
               >
                 {/* Card container con borde que se ilumina */}
